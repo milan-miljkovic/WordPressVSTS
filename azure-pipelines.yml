@@ -17,7 +17,7 @@ steps:
     resourceGroupName: 'dev-wordpress-rg'
     location: 'West Europe'
     csmFile: '$(System.DefaultWorkingDirectory)/**/containerRegistry-template.json'
-    overrideParameters: '-registryName "simplephpdockeracr" -registryLocation "South Central US" -registrySku "Standard"'
+    overrideParameters: '-registryName "devwordpressacr" -registryLocation "West Europe" -registrySku "Basic"'
 - task: Docker@1
   displayName: 'Build an image'
   inputs:
