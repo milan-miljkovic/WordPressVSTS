@@ -7,7 +7,7 @@ trigger:
   branches:
     include:
       - master
-    
+
 pool:
   vmImage: 'ubuntu-latest'
 
@@ -16,7 +16,7 @@ steps:
   displayName: 'Azure Deployment:Create Azure Container Registry'
   inputs:
     azureSubscription: 'dev-subscription'
-    resourceGroupName: 'prod-acr-rg'
+    resourceGroupName: 'prod-wordpress-acr-rg'
     location: 'West Europe'
     csmFile: '$(System.DefaultWorkingDirectory)/**/containerRegistry-template.json'
     overrideParameters: '-registryName "prodwordpressacr" -registryLocation "West Europe" -registrySku "Basic"'
