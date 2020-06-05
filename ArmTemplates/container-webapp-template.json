@@ -34,7 +34,7 @@
         },
         "stagingSlotName": {
             "defaultValue": "",
-            "type": "string"
+            "type": "String"
           }
     },
     "resources": [
