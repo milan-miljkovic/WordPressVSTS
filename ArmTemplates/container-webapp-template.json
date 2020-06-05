@@ -128,9 +128,9 @@
         {
             "type": "Microsoft.Web/sites/slots",
             "apiVersion": "2016-08-01",
-            "name": "[parameters('stagingSlotName')]",
+            "name": "[concat(parameters('webAppName'), concat('/', parameters('stagingSlotName')))]",
             "tags": {
-              "displayName": "webAppSlots"
+              "displayName": "[concat(parameters('webAppName'), concat('/', parameters('stagingSlotName')))]"
             },
             "location": "[resourceGroup().location]",
             "dependsOn": [
