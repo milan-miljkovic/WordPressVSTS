@@ -34,7 +34,7 @@
         },
         "stagingSlotName": {
             "defaultValue": "",
-            "type": "string"
+            "type": "String"
           }
     },
     "resources": [
@@ -126,9 +126,9 @@
             }
         },
         {
-            "apiVersion": "2015-08-01",
+            "type": "Microsoft.Web/sites/slots",
+            "apiVersion": "2016-08-01",
             "name": "[parameters('stagingSlotName')]",
-            "type": "slots",
             "tags": {
               "displayName": "webAppSlots"
             },
