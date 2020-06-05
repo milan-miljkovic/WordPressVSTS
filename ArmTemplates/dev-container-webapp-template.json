@@ -31,11 +31,7 @@
         "startupCommand": {
             "defaultValue": "",
             "type": "String"
-        },
-        "stagingSlotName": {
-            "defaultValue": "",
-            "type": "String"
-          }
+        }
     },
     "resources": [
         {
@@ -124,21 +120,6 @@
                 "applicationId": "[parameters('webAppName')]",
                 "Request_Source": "AzureTfsExtensionAzureProject"
             }
-        },
-        {
-            "type": "Microsoft.Web/sites/slots",
-            "apiVersion": "2016-08-01",
-            "name": "[concat(parameters('webAppName'), concat('/', parameters('stagingSlotName')))]",
-            "tags": {
-              "displayName": "[concat(parameters('webAppName'), concat('/', parameters('stagingSlotName')))]"
-            },
-            "location": "[resourceGroup().location]",
-            "dependsOn": [
-              "[resourceId('Microsoft.Web/Sites', parameters('webAppName'))]"
-            ],
-            "properties": {
-            },
-            "resources": []
         }
     ]
 }
