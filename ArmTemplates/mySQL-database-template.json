@@ -72,7 +72,10 @@
                     "storageAutoGrow": "[parameters('storageAutoGrow')]"
                 },
                 "previewFeature": "[parameters('previewFeature')]",
-                "infrastructureEncryption": "[parameters('infrastructureEncryption')]"
+                "infrastructureEncryption": "[parameters('infrastructureEncryption')]",
+                "sslEnforcement": "Disabled",
+                "minimalTlsVersion": "TLSEnforcementDisabled",
+                "publicNetworkAccess": "Enabled"
             },
             "sku": {
                 "name": "[parameters('skuName')]",
