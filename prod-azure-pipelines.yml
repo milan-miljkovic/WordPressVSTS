@@ -4,8 +4,11 @@
 # https://aka.ms/yaml
 
 trigger:
-  - master
-    
+  branches:
+    include:
+      - master
+pr: none
+
 pool:
   vmImage: 'ubuntu-latest'
 
@@ -13,21 +16,21 @@ steps:
 - task: AzureResourceGroupDeployment@2
   displayName: 'Azure Deployment:Create Azure Container Registry'
   inputs:
-    azureSubscription: 'dev-subscription'
-    resourceGroupName: 'prod-acr-rg'
+    azureSubscription: 'prod-subscription'
+    resourceGroupName: 'prod-wordpress-rg'
     location: 'West Europe'
     csmFile: '$(System.DefaultWorkingDirectory)/**/containerRegistry-template.json'
     overrideParameters: '-registryName "prodwordpressacr" -registryLocation "West Europe" -registrySku "Basic"'
 - task: Docker@1
   displayName: 'Build an image'
   inputs:
-    azureSubscriptionEndpoint: 'dev-subscription'
+    azureSubscriptionEndpoint: 'prod-subscription'
     azureContainerRegistry: prodwordpressacr.azurecr.io
     imageName: 'wordpress-prod:$(Build.BuildId)'
 - task: Docker@1
   displayName: 'Push an image'
   inputs:
-    azureSubscriptionEndpoint: 'dev-subscription'
+    azureSubscriptionEndpoint: 'prod-subscription'
     azureContainerRegistry: prodwordpressacr.azurecr.io
     command: 'Push an image'
     imageName: 'wordpress-prod:$(Build.BuildId)'

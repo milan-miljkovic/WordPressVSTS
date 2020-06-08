@@ -4,8 +4,11 @@
 # https://aka.ms/yaml
 
 trigger:
-  - develop
-    
+  branches:
+    include:
+      - develop
+pr: none
+
 pool:
   vmImage: 'ubuntu-latest'
 
@@ -14,7 +17,7 @@ steps:
   displayName: 'Azure Deployment:Create Azure Container Registry'
   inputs:
     azureSubscription: 'dev-subscription'
-    resourceGroupName: 'dev-acr-rg'
+    resourceGroupName: 'dev-wordpress-rg'
     location: 'West Europe'
     csmFile: '$(System.DefaultWorkingDirectory)/**/containerRegistry-template.json'
     overrideParameters: '-registryName "devwordpressacr" -registryLocation "West Europe" -registrySku "Basic"'
