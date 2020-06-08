@@ -7,6 +7,7 @@ trigger:
   branches:
     include:
       - develop
+pr: none
 
 pr: none
 
@@ -18,7 +19,7 @@ steps:
   displayName: 'Azure Deployment:Create Azure Container Registry'
   inputs:
     azureSubscription: 'dev-subscription'
-    resourceGroupName: 'dev-wordpress-acr-rg'
+    resourceGroupName: 'dev-wordpress-rg'
     location: 'West Europe'
     csmFile: '$(System.DefaultWorkingDirectory)/**/containerRegistry-template.json'
     overrideParameters: '-registryName "devwordpressacr" -registryLocation "West Europe" -registrySku "Basic"'
