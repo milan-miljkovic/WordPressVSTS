@@ -35,6 +35,22 @@
         "stagingSlotName": {
             "defaultValue": "",
             "type": "String"
+        },
+        "dbHost": {
+            "defaultValue": "",
+            "type": "String"
+        },
+        "dbName": {
+            "defaultValue": "",
+            "type": "String"
+        },
+        "dbUser": {
+            "defaultValue": "",
+            "type": "String"
+        },
+        "dbPassword": {
+            "defaultValue": "",
+            "type": "String"
         }
     },
     "resources": [
@@ -69,6 +85,22 @@
                         {
                             "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
                             "value": "[reference(resourceId('microsoft.insights/components/', parameters('webAppName')), '2015-05-01').InstrumentationKey]"
+                        },
+                        {
+                            "name": "DB_ENV_HOST",
+                            "value": "[parameters('dbHost')]"
+                        },
+                        {
+                            "name": "DB_ENV_NAME",
+                            "value": "[parameters('dbName')]"
+                        },
+                        {
+                            "name": "DB_ENV_USER",
+                            "value": "[parameters('dbUser')]"
+                        },
+                        {
+                            "name": "DB_ENV_PASSWORD",
+                            "value": "[parameters('dbPassword')]"
                         }
                     ],
                     "appCommandLine": "[parameters('startupCommand')]",
@@ -137,6 +169,7 @@
               "[resourceId('Microsoft.Web/Sites', parameters('webAppName'))]"
             ],
             "properties": {
+
             },
             "resources": []
         }
