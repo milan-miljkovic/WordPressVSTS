@@ -227,23 +227,28 @@
                         },
                         {
                             "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
-                            "value": "[reference(resourceId('microsoft.insights/components/', parameters('siteName')), '2015-05-01').InstrumentationKey]"
+                            "value": "[reference(resourceId('microsoft.insights/components/', parameters('siteName')), '2015-05-01').InstrumentationKey]",
+                            "slotSetting": true
                         },
                         {
                             "name": "DB_ENV_HOST",
-                            "value": "[reference(resourceId('Microsoft.DBforMySQL/servers',parameters('dbServerName'))).fullyQualifiedDomainName]"
+                            "value": "[reference(resourceId('Microsoft.DBforMySQL/servers',parameters('dbServerName'))).fullyQualifiedDomainName]",
+                            "slotSetting": true
                         },
                         {
                             "name": "DB_ENV_NAME",
-                            "value": "[parameters('prodDatabaseName')]"
+                            "value": "[parameters('prodDatabaseName')]",
+                            "slotSetting": true
                         },
                         {
                             "name": "DB_ENV_USER",
-                            "value": "[parameters('dbProdServiceUser')]"
+                            "value": "[parameters('dbProdServiceUser')]",
+                            "slotSetting": true
                         },
                         {
                             "name": "DB_ENV_PASSWORD",
-                            "value": "[parameters('dbProdServicePassword')]"
+                            "value": "[parameters('dbProdServicePassword')]",
+                            "slotSetting": true
                         }
                     ],
                     "appCommandLine": "[parameters('startupCommand')]",
@@ -392,23 +397,28 @@
                         },
                         {
                             "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
-                            "value": "[reference(resourceId('microsoft.insights/components/', concat(parameters('siteName'), '-', parameters('stagingSlotName'))), '2015-05-01').InstrumentationKey]"
+                            "value": "[reference(resourceId('microsoft.insights/components/', concat(parameters('siteName'), '-', parameters('stagingSlotName'))), '2015-05-01').InstrumentationKey]",
+                            "slotSetting": true
                         },
                         {
                             "name": "DB_ENV_HOST",
-                            "value": "[reference(resourceId('Microsoft.DBforMySQL/servers',parameters('dbServerName'))).fullyQualifiedDomainName]"
+                            "value": "[reference(resourceId('Microsoft.DBforMySQL/servers',parameters('dbServerName'))).fullyQualifiedDomainName]",
+                            "slotSetting": true
                         },
                         {
                             "name": "DB_ENV_NAME",
-                            "value": "[parameters('stageDatabaseName')]"
+                            "value": "[parameters('stageDatabaseName')]",
+                            "slotSetting": true
                         },
                         {
                             "name": "DB_ENV_USER",
-                            "value": "[parameters('dbStageServiceUser')]"
+                            "value": "[parameters('dbStageServiceUser')]",
+                            "slotSetting": true
                         },
                         {
                             "name": "DB_ENV_PASSWORD",
-                            "value": "[parameters('dbStageServicePassword')]"
+                            "value": "[parameters('dbStageServicePassword')]",
+                            "slotSetting": true
                         }
                     ]
                 }
