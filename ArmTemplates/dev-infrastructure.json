@@ -251,7 +251,9 @@
                     "backupRetentionDays": "7",
                     "geoRedundantBackup": "Disabled"
                 },
-                "sslEnforcement": "Disabled"
+                "sslEnforcement": "Disabled",
+                "minimalTlsVersion": "TLSEnforcementDisabled",
+                "publicNetworkAccess": "Enabled"
             },
             "resources": [
                 {
