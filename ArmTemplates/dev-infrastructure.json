@@ -257,14 +257,12 @@
             },
             "resources": [
                 {
-                    "type": "firewallrules",
+                    "type": "Microsoft.DBforMySQL/servers/firewallRules",
                     "apiVersion": "2017-12-01",
+                    "name": "[concat(parameters('dbServerName'), '/AllowAllWindowsAzureIps')]",
                     "dependsOn": [
-                        "[concat('Microsoft.DBforMySQL/servers/', parameters('dbServerName'),'/databases/' , parameters('databaseName'))]",
-                        "[concat('Microsoft.DBforMySQL/servers/', parameters('dbServerName'))]"
+                        "[resourceId('Microsoft.DBforMySQL/servers', parameters('dbServerName'))]"
                     ],
-                    "location": "[parameters('location')]",
-                    "name": "AllowAzureIPs",
                     "properties": {
                         "startIpAddress": "0.0.0.0",
                         "endIpAddress": "0.0.0.0"
