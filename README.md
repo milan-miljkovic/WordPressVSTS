@@ -1,4 +1,9 @@
 # Building WordPress using Azure DevOps and deploying to Azure App Service
+
+Last Develop build: [![Build Status](https://dev.azure.com/milanmiljkovic/wordpress-demo/_apis/build/status/dev-wordpress-CI?branchName=develop)](https://dev.azure.com/milanmiljkovic/wordpress-demo/_build/latest?definitionId=8&branchName=develop)
+
+Last Master Build: [![Build Status](https://dev.azure.com/milanmiljkovic/wordpress-demo/_apis/build/status/prod-wordpress-CI?branchName=master)](https://dev.azure.com/milanmiljkovic/wordpress-demo/_build/latest?definitionId=9&branchName=master)
+
 Read my two articles about building custom WordPress solution and deploying it to Azure App Service at Azure Blogs <br> 
 <a href='https://azure.microsoft.com/en-us/blog/deploying-wordpress-application-using-vsts-and-azure-part-one'>Part 1</a><br>
 <a href='https://azure.microsoft.com/en-us/blog/deploying-wordpress-application-using-visual-studio-team-services-and-azure-part-two/'>Part 2</a><br>
