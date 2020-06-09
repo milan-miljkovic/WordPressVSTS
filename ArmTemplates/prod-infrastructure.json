@@ -362,7 +362,7 @@
         {
             "type": "Microsoft.Web/sites/slots",
             "apiVersion": "2016-08-01",
-            "name": "[concat(parameters('siteName'), concat('/', parameters('stagingSlotName')))]",
+            "name": "[concat(parameters('siteName'), '/', parameters('stagingSlotName'))]",
             "tags": {
               "displayName": "[concat(parameters('siteName'), concat('/', parameters('stagingSlotName')))]"
             },
@@ -371,7 +371,7 @@
               "[resourceId('Microsoft.Web/Sites', parameters('siteName'))]"
             ],
             "properties": {
-                "name": "[concat(parameters('siteName'), concat('/', parameters('stagingSlotName')))]",
+                "name": "[concat(parameters('siteName'), '(', parameters('stagingSlotName'), ')')]",
                 "siteConfig": {
                     "appSettings": [
                         {
