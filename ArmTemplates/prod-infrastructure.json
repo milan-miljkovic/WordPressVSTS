@@ -9,7 +9,7 @@
             }
         },
         "sku": {
-            "defaultValue": "F1 Free",
+            "defaultValue": "S1 Standard",
             "type": "String",
             "metadata": {
                 "description": "Web App sku name"
@@ -102,7 +102,13 @@
                 "description": "Azure database for MySQL sku family"
             }
         },
-        "databaseName": {
+        "prodDatabaseName": {
+            "type": "string",
+            "metadata": {
+                "description": "Azure database name for MySQL"
+            }
+        },
+        "stageDatabaseName": {
             "type": "string",
             "metadata": {
                 "description": "Azure database name for MySQL"
@@ -134,18 +140,39 @@
                 "description": "Custom startup command for WebApp"
             }
         },
-        "dbServiceUser": {
+        "dbProdServiceUser": {
             "defaultValue": "",
             "type": "String",
             "metadata": {
                 "description": "Username of the service db account"
             }
         },
-        "dbServicePassword": {
+        "dbProdServicePassword": {
             "defaultValue": "",
             "type": "secureString",
             "metadata": {
                 "description": "Password of the service db account"
+            }
+        },
+        "dbStageServiceUser": {
+            "defaultValue": "",
+            "type": "String",
+            "metadata": {
+                "description": "Username of the service db account"
+            }
+        },
+        "dbStageServicePassword": {
+            "defaultValue": "",
+            "type": "secureString",
+            "metadata": {
+                "description": "Password of the service db account"
+            }
+        },
+        "stagingSlotName": {
+            "defaultValue": "stage",
+            "type": "String",
+            "metadata": {
+                "description": "Name of the WebApp Stage slot name"
             }
         }
     },
@@ -208,15 +235,15 @@
                         },
                         {
                             "name": "DB_ENV_NAME",
-                            "value": "[parameters('databaseName')]"
+                            "value": "[parameters('prodDatabaseName')]"
                         },
                         {
                             "name": "DB_ENV_USER",
-                            "value": "[parameters('dbServiceUser')]"
+                            "value": "[parameters('dbProdServiceUser')]"
                         },
                         {
                             "name": "DB_ENV_PASSWORD",
-                            "value": "[parameters('dbServicePassword')]"
+                            "value": "[parameters('dbProdServicePassword')]"
                         }
                     ],
                     "appCommandLine": "[parameters('startupCommand')]",
@@ -269,7 +296,19 @@
                     }
                 },
                 {
-                    "name": "[parameters('databaseName')]",
+                    "name": "[parameters('prodDatabaseName')]",
+                    "type": "databases",
+                    "apiVersion": "2017-12-01",
+                    "properties": {
+                        "charset": "utf8",
+                        "collation": "utf8_general_ci"
+                    },
+                    "dependsOn": [
+                        "[concat('Microsoft.DBforMySQL/servers/', parameters('dbServerName'))]"
+                    ]
+                },
+                {
+                    "name": "[parameters('stageDatabaseName')]",
                     "type": "databases",
                     "apiVersion": "2017-12-01",
                     "properties": {
@@ -296,6 +335,19 @@
             }
         },
         {
+            "type": "Microsoft.Insights/components",
+            "name": "[concat(parameters('siteName'), '-', parameters('stagingSlotName'))]",
+            "apiVersion": "2014-04-01",
+            "location": "[parameters('location')]",
+            "tags": {
+                "[concat('hidden-link:', resourceGroup().id, '/providers/Microsoft.Web/sites/', parameters('siteName'))]": "Resource"
+            },
+            "properties": {
+                "applicationId": "[concat(parameters('siteName'), '-', parameters('stagingSlotName'))]",
+                "Request_Source": "AzureTfsExtensionAzureProject"
+            }
+        },
+        {
             "type": "Microsoft.ContainerRegistry/registries",
             "sku": {
                 "name": "[parameters('registrySku')]"
@@ -306,6 +358,62 @@
             "properties": {
                 "adminUserEnabled": "true"
             }
+        },
+        {
+            "type": "Microsoft.Web/sites/slots",
+            "apiVersion": "2016-08-01",
+            "name": "[concat(parameters('siteName'), concat('/', parameters('stagingSlotName')))]",
+            "tags": {
+              "displayName": "[concat(parameters('siteName'), concat('/', parameters('stagingSlotName')))]"
+            },
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+              "[resourceId('Microsoft.Web/Sites', parameters('siteName'))]"
+            ],
+            "properties": {
+                "name": "[concat(parameters('siteName'), concat('/', parameters('stagingSlotName')))]",
+                "siteConfig": {
+                    "appSettings": [
+                        {
+                            "name": "DOCKER_REGISTRY_SERVER_URL",
+                            "value": "[concat('https://', reference(concat('Microsoft.ContainerRegistry/registries/', parameters('registryName'))).loginServer)]"
+                        },
+                        {
+                            "name": "DOCKER_REGISTRY_SERVER_USERNAME",
+                            "value": "[listCredentials(concat('Microsoft.ContainerRegistry/registries/', parameters('registryName')), '2017-10-01').username]"
+                        },
+                        {
+                            "name": "DOCKER_REGISTRY_SERVER_PASSWORD",
+                            "value": "[listCredentials(concat('Microsoft.ContainerRegistry/registries/', parameters('registryName')), '2017-10-01').passwords[0].value]"
+                        },
+                        {
+                            "name": "WEBSITES_ENABLE_APP_SERVICE_STORAGE",
+                            "value": "false"
+                        },
+                        {
+                            "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+                            "value": "[reference(resourceId('microsoft.insights/components/', concat(parameters('siteName'), '-', parameters('stagingSlotName'))), '2015-05-01').InstrumentationKey]"
+                        },
+                        {
+                            "name": "DB_ENV_HOST",
+                            "value": "[reference(resourceId('Microsoft.DBforMySQL/servers',parameters('dbServerName'))).fullyQualifiedDomainName]"
+                        },
+                        {
+                            "name": "DB_ENV_NAME",
+                            "value": "[parameters('stageDatabaseName')]"
+                        },
+                        {
+                            "name": "DB_ENV_USER",
+                            "value": "[parameters('dbStageServiceUser')]"
+                        },
+                        {
+                            "name": "DB_ENV_PASSWORD",
+                            "value": "[parameters('dbStageServicePassword')]"
+                        }
+                    ]
+                }
+            },
+            "resources": []
         }
     ]
 }
