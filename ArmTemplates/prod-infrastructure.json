@@ -102,12 +102,6 @@
                 "description": "Azure database for MySQL sku family"
             }
         },
-        "prodDatabaseName": {
-            "type": "string",
-            "metadata": {
-                "description": "Azure database name for MySQL"
-            }
-        },
         "stageDatabaseName": {
             "type": "string",
             "metadata": {
@@ -235,7 +229,7 @@
                         },
                         {
                             "name": "DB_ENV_NAME",
-                            "value": "[parameters('prodDatabaseName')]"
+                            "value": "[parameters('stageDatabaseName')]"
                         },
                         {
                             "name": "DB_ENV_USER",
@@ -294,18 +288,6 @@
                         "startIpAddress": "0.0.0.0",
                         "endIpAddress": "0.0.0.0"
                     }
-                },
-                {
-                    "name": "[parameters('prodDatabaseName')]",
-                    "type": "databases",
-                    "apiVersion": "2017-12-01",
-                    "properties": {
-                        "charset": "utf8",
-                        "collation": "utf8_general_ci"
-                    },
-                    "dependsOn": [
-                        "[concat('Microsoft.DBforMySQL/servers/', parameters('dbServerName'))]"
-                    ]
                 },
                 {
                     "name": "[parameters('stageDatabaseName')]",
@@ -423,7 +405,7 @@
           "[resourceId('Microsoft.Web/Sites', parameters('siteName'))]"
         ],
         "properties": {
-          "appSettingNames": [ "APPINSIGHTS_INSTRUMENTATIONKEY", "DB_ENV_HOST", "DB_ENV_NAME", "DB_ENV_USER", "DB_ENV_PASSWORD" ]
+          "appSettingNames": [ "APPINSIGHTS_INSTRUMENTATIONKEY", "DB_ENV_HOST", "DB_ENV_USER", "DB_ENV_PASSWORD" ]
         }
       }
     ]
