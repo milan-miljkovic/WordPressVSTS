@@ -102,6 +102,12 @@
                 "description": "Azure database for MySQL sku family"
             }
         },
+        "prodDatabaseName": {
+            "type": "string",
+            "metadata": {
+                "description": "Azure database name for MySQL"
+            }
+        },
         "stageDatabaseName": {
             "type": "string",
             "metadata": {
@@ -229,7 +235,7 @@
                         },
                         {
                             "name": "DB_ENV_NAME",
-                            "value": "[parameters('stageDatabaseName')]"
+                            "value": "[parameters('prodDatabaseName')]"
                         },
                         {
                             "name": "DB_ENV_USER",
