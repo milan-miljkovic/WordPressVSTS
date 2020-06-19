@@ -39,6 +39,11 @@ steps:
   inputs:
     SourceFolder: ArmTemplates
     TargetFolder: '$(build.artifactstagingdirectory)'
+- task: CopyFiles@2
+  displayName: 'Copy ARM templates'
+  inputs:
+    SourceFolder: DbChangeLog
+    TargetFolder: '$(build.artifactstagingdirectory)/DbChangeLog'
     
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact'
