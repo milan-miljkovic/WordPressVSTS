@@ -16,7 +16,7 @@ steps:
 - task: AzureResourceGroupDeployment@2
   displayName: 'Azure Deployment:Create Azure Container Registry'
   inputs:
-    azureSubscription: 'prod-subscription'
+    azureSubscription: 'vicert-subscription'
     resourceGroupName: 'prod-wordpress-rg'
     location: 'West Europe'
     csmFile: '$(System.DefaultWorkingDirectory)/**/containerRegistry-template.json'
@@ -24,13 +24,13 @@ steps:
 - task: Docker@1
   displayName: 'Build an image'
   inputs:
-    azureSubscriptionEndpoint: 'prod-subscription'
+    azureSubscriptionEndpoint: 'vicert-subscription'
     azureContainerRegistry: prodwordpressacr.azurecr.io
     imageName: 'wordpress-prod:$(Build.BuildId)'
 - task: Docker@1
   displayName: 'Push an image'
   inputs:
-    azureSubscriptionEndpoint: 'prod-subscription'
+    azureSubscriptionEndpoint: 'vicert-subscription'
     azureContainerRegistry: prodwordpressacr.azurecr.io
     command: 'Push an image'
     imageName: 'wordpress-prod:$(Build.BuildId)'
