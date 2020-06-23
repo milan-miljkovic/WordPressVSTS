@@ -433,6 +433,7 @@
             }
         },
         {
+            "apiVersion": "2019-04-01",
             "type": "Microsoft.Network/frontdoors",
             "name": "[parameters('frontDoorName')]",
             "location": "Global",
