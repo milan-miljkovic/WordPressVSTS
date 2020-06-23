@@ -446,12 +446,12 @@
                         "properties": {
                             "backends": [
                                 {
-                                    "address": "[reference(resourceId('Microsoft.Web/Sites', parameters('siteName'))).fullyQualifiedDomainName]",
+                                    "address": "[reference(resourceId('Microsoft.Web/Sites', parameters('siteName'))).defaultHostName]",
                                     "httpPort": 80,
                                     "httpsPort": 443,
                                     "priority": 1,
                                     "weight": 50,
-                                    "backendHostHeader": "[reference(resourceId('Microsoft.Web/Sites', parameters('siteName'))).fullyQualifiedDomainName]",
+                                    "backendHostHeader": "[reference(resourceId('Microsoft.Web/Sites', parameters('siteName'))).defaultHostName]",
                                     "enabledState": "Enabled"
                                 }
                             ],
