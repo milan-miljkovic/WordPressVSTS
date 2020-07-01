@@ -1,8 +1,11 @@
 FROM wordpress:4.9.1-apache
 
-COPY html /var/www/html
-COPY application-insights /var/www/html/wp-content/plugins
+WORKDIR /var/www/html
+
+COPY application-insights /wp-content/plugins
+COPY html/wp-content/themes /wp-content/themes
+COPY html/wp-config.php .
 
 RUN chown -R www-data:www-data /var/www/html/
 
-ENTRYPOINT ["apache2-foreground"]
+CMD ["apache2-foreground"]
