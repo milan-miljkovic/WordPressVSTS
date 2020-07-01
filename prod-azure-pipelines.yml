@@ -40,7 +40,7 @@ steps:
     SourceFolder: ArmTemplates
     TargetFolder: '$(build.artifactstagingdirectory)'
 - task: CopyFiles@2
-  displayName: 'Copy ARM templates'
+  displayName: 'Copy db changes'
   inputs:
     SourceFolder: DbChangeLog
     TargetFolder: '$(build.artifactstagingdirectory)/DbChangeLog'
